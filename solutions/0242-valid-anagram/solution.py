@@ -3,6 +3,12 @@ class Solution:
         if len(s) != len(t):
             return False
         
-        return Counter(list(s)) == Counter(list(t))
+        s_freq = {}
+        t_freq = {}
+
+        for i in range(len(s)):
+            s_freq[s[i]] = 1 + s_freq.get(s[i], 0)
+            t_freq[t[i]] = 1 + t_freq.get(t[i], 0)
+            
         
-        
+        return s_freq == t_freq
