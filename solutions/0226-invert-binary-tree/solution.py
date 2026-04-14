@@ -4,9 +4,28 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+from collections import deque
+
 class Solution:
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
         if not root:
-            return None
+            return root
+        
+        if not root.left and not root.right:
+            return root
+        
 
-        return TreeNode(root.val, self.invertTree(root.right), self.invertTree(root.left))
+        s = []
+        s.append(root)
+
+        while s:
+            node = s.pop()
+            node.left, node.right = node.right, node.left
+
+            if node.left:
+                s.append(node.left)
+            if node.right:
+                s.append(node.right)
+
+        
+        return root
