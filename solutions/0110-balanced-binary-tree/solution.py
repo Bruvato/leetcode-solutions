@@ -9,10 +9,28 @@ class Solution:
         if not root:
             return True
         
-        return abs(self.height(root.left) - self.height(root.right)) <= 1 and self.isBalanced(root.left) and self.isBalanced(root.right)
-    
-    def height(self, root: Optional[TreeNode]) -> int:
-        if not root:
-            return 0
-        
-        return 1 + max(self.height(root.left), self.height(root.right))
+        hm = {None: 0}
+
+        s = []
+        s.append(root)
+
+
+        while s:
+            peek = s[-1]
+
+            if peek.left and peek.left not in hm:
+                s.append(peek.left)
+            elif peek.right and peek.right not in hm:
+                s.append(peek.right)
+            else:
+                node = s.pop()
+
+                lh = hm[node.left]
+                rh = hm[node.right]
+
+                if abs(lh - rh) > 1:
+                    return False
+                
+                hm[node] = 1 + max(lh, rh)
+            
+        return True
