@@ -12,9 +12,14 @@ class Solution:
         if q == root:
             return q
                     
-        if p.val < root.val and q.val < root.val:
-            return self.lowestCommonAncestor(root.left, p, q)
-        if p.val > root.val and q.val > root.val:
-            return self.lowestCommonAncestor(root.right, p, q)
-            
-        return root
+        curr = root
+
+        while curr:
+            if curr.val > p.val and curr.val > q.val:
+                curr = curr.left
+            elif curr.val < p.val and curr.val < q.val:
+                curr = curr.right
+            else:
+                return curr
+        
+        return curr
