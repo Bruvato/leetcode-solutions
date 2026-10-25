@@ -1,13 +1,13 @@
 class Solution:
-    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        
-        freq = defaultdict(list)
-
+    def groupAnagrams(self, strs: list[str]) -> list[list[str]]:
+        hm = defaultdict(list)
 
         for s in strs:
-            count = [0] * 26
+            ht = [0] * 26
+            
             for c in s:
-                count[ord(c) - ord('a')] += 1
-            freq[tuple(count)].append(s)
-
-        return list(freq.values())
+                ht[ord(c) - ord('a')] += 1
+            
+            hm[tuple(ht)].append(s)
+        
+        return list(hm.values())
