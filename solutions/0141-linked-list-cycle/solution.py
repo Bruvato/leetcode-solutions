@@ -9,12 +9,15 @@ class Solution:
         slow = head
         fast = head
 
-        while fast and fast.next:
+        while head:
+            if not fast.next or not fast.next.next:
+                return False
             slow = slow.next
             fast = fast.next.next
 
             if slow == fast:
                 return True
-
+            
+            head = head.next
         
         return False
