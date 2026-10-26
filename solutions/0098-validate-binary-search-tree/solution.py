@@ -9,22 +9,18 @@ class Solution:
         if not root:
             return True
         
-        if not root.left and not root.right:
-            return True
-
-        q = deque()
-        q.append((root, float("-inf"), float("inf")))
+        q = deque([(root, float('-inf'), float('inf'))])
 
         while q:
-            node, l, r = q.pop()
-
-            if not (l < node.val < r):
+            node, l, r = q.popleft()
+            if not l < node.val < r:
                 return False
-            
+
             if node.left:
                 q.append((node.left, l, node.val))
             if node.right:
                 q.append((node.right, node.val, r))
 
-
         return True
+
+        
