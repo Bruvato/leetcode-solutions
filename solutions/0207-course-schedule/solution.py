@@ -3,35 +3,34 @@ class Solution:
 
         g = defaultdict(list)
         # prereq -> course
+        indegree = [0] * numCourses
         
         for course, prereq in prerequisites:
             if course == prereq:
                 return False
             
             g[prereq].append(course)
+            indegree[course] += 1
         
-        state = [0] * numCourses
+        taken = 0
+        q = deque()
 
-        def dfs(node):
-            if state[node] == 1:
-                return False
-            
-            if state[node] == 2:
-                return True
-            
-            state[node] = 1
-            for nei in g[node]:
-                if not dfs(nei):
-                    return False
-            
-            state[node] = 2
-            return True
-        
         for i in range(numCourses):
-            if not dfs(i):
-                return False
+            if indegree[i] == 0:
+                q.append(i)
+                taken += 1
         
-        return True
+        while q:
+            node = q.popleft()
+
+            for nei in g[node]:
+                indegree[nei] -= 1
+
+                if indegree[nei] == 0:
+                    taken += 1
+                    q.append(nei)
+                
+        return taken == numCourses
 
 
 
