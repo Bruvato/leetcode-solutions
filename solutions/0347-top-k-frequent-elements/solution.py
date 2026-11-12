@@ -1,24 +1,24 @@
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        n = len(nums)
         hm = {}
-
+        h = []
 
         for num in nums:
-            hm[num] = hm.get(num, 0) + 1
+            if num not in hm:
+                hm[num] = 1
+            else:
+                hm[num] += 1
         
-        
-        heap = []
-
         for num, freq in hm.items():
-            heapq.heappush(heap, (freq, num))
-            if len(heap) > k:
-                heapq.heappop(heap)
-        
-        res = []
+            heapq.heappush(h, (freq, num))
 
-        for i in range(k):
-            freq, num = heapq.heappop(heap)
-            res.append(num)
+            if len(h) > k:
+                heapq.heappop(h)
         
-        return res
+        return [x[1] for x in h]
+
+
+        '''
+        1 2 3
+
+        '''
